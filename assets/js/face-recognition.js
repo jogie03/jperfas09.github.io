@@ -197,15 +197,15 @@ async function recordAttendance(employee) {
                     timeOut: timeString,
                     totalHours: parseFloat(hoursWorked.toFixed(2)),
                     status: 'COMPLETED',
-                    remarks: 'Time Out - Umalis na'
+                    remarks: 'Time Out - Employee left'
                 });
                 
-                remarks = `Time Out - Umalis na. Kabuuang oras: ${hoursWorked.toFixed(1)} hours`;
+                remarks = `Time Out - Employee left. Total hours: ${hoursWorked.toFixed(1)} hours`;
                 status = 'COMPLETED';
             }
         } else {
             // New time in
-            remarks = 'Time In - Dumating na';
+            remarks = 'Time In - Employee arrived';
             
             // Check if late (assuming 9 AM is standard time)
             const lateTime = new Date(today + 'T09:00:00');
@@ -321,7 +321,7 @@ async function loadTodayScans() {
         const tableBody = document.getElementById('recentScansTable').querySelector('tbody');
         
         if (scansSnapshot.empty) {
-            tableBody.innerHTML = '<tr id="noScans" class="text-muted text-center"><td colspan="5">Walang scans pa ngayong araw</td></tr>';
+            tableBody.innerHTML = '<tr id="noScans" class="text-muted text-center"><td colspan="5">No scans recorded today</td></tr>';
             return;
         }
         

@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="tl">
+    <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Attendance Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary sticky-top">
+    <nav class="navbar navbar-dark bg-gradient sticky-top navbar-custom">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">📋 Attendance Tracker</span>
+            <span class="navbar-brand mb-0 h1"><i class="fas fa-clipboard-list"></i> Attendance Tracker</span>
             <div class="text-white">
-                <span id="userEmail" class="me-3"></span>
-                <button class="btn btn-outline-light" id="logoutBtn">Mag-Logout</button>
+                <span id="userEmail" class="me-3"><i class="fas fa-user-circle"></i> <span id="emailText"></span></span>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </div>
     </nav>
@@ -21,44 +22,49 @@
     <div class="container-fluid mt-4">
         <div class="row mb-4">
             <div class="col-12">
-                <h2 class="fw-bold">Dashboard</h2>
+                <h2 class="fw-bold"><i class="fas fa-home"></i> Dashboard</h2>
+                <p class="text-muted">Welcome to the Attendance Management System</p>
             </div>
         </div>
 
         <!-- Quick Access Cards -->
         <div class="row mb-4">
             <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card border-0 shadow-sm cursor-pointer" onclick="goToPage('attendance-scan.html')">
+                <div class="card border-0 shadow-sm cursor-pointer card-hover card-primary" onclick="goToPage('attendance-scan.html')">
                     <div class="card-body text-center">
-                        <h5 class="card-title">🔍 Face Scan</h5>
-                        <p class="card-text text-muted">Mag-scan ng attendance</p>
+                        <div class="card-icon mb-3"><i class="fas fa-camera"></i></div>
+                        <h5 class="card-title">Face Scan</h5>
+                        <p class="card-text text-muted small">Record attendance via face recognition</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card border-0 shadow-sm cursor-pointer" onclick="goToPage('attendance-records.html')">
+                <div class="card border-0 shadow-sm cursor-pointer card-hover card-info" onclick="goToPage('attendance-records.html')">
                     <div class="card-body text-center">
-                        <h5 class="card-title">📋 Attendance Records</h5>
-                        <p class="card-text text-muted">Tingnan ang attendance log</p>
+                        <div class="card-icon mb-3"><i class="fas fa-list-check"></i></div>
+                        <h5 class="card-title">Attendance Records</h5>
+                        <p class="card-text text-muted small">View attendance logs and history</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card border-0 shadow-sm cursor-pointer" onclick="goToPage('employee-registration.html')">
+                <div class="card border-0 shadow-sm cursor-pointer card-hover card-success" onclick="goToPage('employee-registration.html')">
                     <div class="card-body text-center">
-                        <h5 class="card-title">👤 Employee Registration</h5>
-                        <p class="card-text text-muted">Mag-register ng empleyado</p>
+                        <div class="card-icon mb-3"><i class="fas fa-user-plus"></i></div>
+                        <h5 class="card-title">Employee Registration</h5>
+                        <p class="card-text text-muted small">Register new employees</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card border-0 shadow-sm cursor-pointer" onclick="goToPage('attendance-summary.html')">
+                <div class="card border-0 shadow-sm cursor-pointer card-hover card-warning" onclick="goToPage('attendance-summary.html')">
                     <div class="card-body text-center">
-                        <h5 class="card-title">📊 Summary/Reports</h5>
-                        <p class="card-text text-muted">Tingnan ang attendance reports</p>
+                        <div class="card-icon mb-3"><i class="fas fa-chart-bar"></i></div>
+                        <h5 class="card-title">Reports</h5>
+                        <p class="card-text text-muted small">View attendance reports & analytics</p>
                     </div>
                 </div>
             </div>
@@ -69,33 +75,45 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Araw-Araw na Kabuuan (Ngayong Araw)</h5>
+                        <h5 class="mb-0"><i class="fas fa-calendar-today"></i> Today's Summary</h5>
                     </div>
                     <div class="card-body">
                         <div class="row text-center">
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">Kabuuang Empleyado</h6>
-                                <h3 class="text-primary fw-bold" id="totalEmployees">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">Total Employees</h6>
+                                    <h3 class="text-primary fw-bold" id="totalEmployees">0</h3>
+                                </div>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">Present</h6>
-                                <h3 class="text-success fw-bold" id="presentCount">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">Present</h6>
+                                    <h3 class="text-success fw-bold" id="presentCount">0</h3>
+                                </div>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">Late</h6>
-                                <h3 class="text-warning fw-bold" id="lateCount">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">Late</h6>
+                                    <h3 class="text-warning fw-bold" id="lateCount">0</h3>
+                                </div>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">Absent</h6>
-                                <h3 class="text-danger fw-bold" id="absentCount">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">Absent</h6>
+                                    <h3 class="text-danger fw-bold" id="absentCount">0</h3>
+                                </div>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">On Leave</h6>
-                                <h3 class="text-info fw-bold" id="leaveCount">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">On Leave</h6>
+                                    <h3 class="text-info fw-bold" id="leaveCount">0</h3>
+                                </div>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <h6 class="text-muted">Work From Home</h6>
-                                <h3 class="text-secondary fw-bold" id="wfhCount">0</h3>
+                                <div class="summary-box">
+                                    <h6 class="text-muted mb-2">Work From Home</h6>
+                                    <h3 class="text-secondary fw-bold" id="wfhCount">0</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
