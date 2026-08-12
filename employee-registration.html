@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - Attendance Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">📋 Attendance Tracker</span>
+            <div class="text-white">
+                <span id="userEmail" class="me-3"></span>
+                <a href="dashboard.html" class="btn btn-outline-light btn-sm me-2">Back to Dashboard</a>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn">Mag-Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="fw-bold mb-4">👤 Employee Registration</h2>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-5">
+                        <form id="employeeForm">
+                            <!-- Employee ID -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="employeeId" class="form-label">Employee ID *</label>
+                                    <input type="text" class="form-control form-control-lg" id="employeeId" 
+                                           placeholder="e.g., EMP001" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">Pangalan (First Name) *</label>
+                                    <input type="text" class="form-control form-control-lg" id="firstName" 
+                                           placeholder="Juan" required>
+                                </div>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Apelyido (Last Name) *</label>
+                                    <input type="text" class="form-control form-control-lg" id="lastName" 
+                                           placeholder="Dela Cruz" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control form-control-lg" id="email" 
+                                           placeholder="email@example.com">
+                                </div>
+                            </div>
+
+                            <!-- Department and Position -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="department" class="form-label">Departamento *</label>
+                                    <select class="form-control form-control-lg" id="department" required>
+                                        <option value="">Pumili ng Departamento</option>
+                                        <option value="IT">IT/Teknolohiya</option>
+                                        <option value="HR">HR/Tao Resources</option>
+                                        <option value="Sales">Sales/Marketing</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Finance">Finance/Accounting</option>
+                                        <option value="Admin">Administration</option>
+                                        <option value="Support">Customer Support</option>
+                                        <option value="Other">Iba</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="position" class="form-label">Posisyon *</label>
+                                    <input type="text" class="form-control form-control-lg" id="position" 
+                                           placeholder="e.g., Manager, Developer" required>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="status" class="form-label">Employee Status *</label>
+                                    <select class="form-control form-control-lg" id="status" required>
+                                        <option value="">Pumili ng Status</option>
+                                        <option value="Active" selected>Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                        <option value="On Leave">On Leave</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Telepono</label>
+                                    <input type="tel" class="form-control form-control-lg" id="phone" 
+                                           placeholder="+63 9XX XXX XXXX">
+                                </div>
+                            </div>
+
+                            <!-- Face Photo Upload -->
+                            <div class="mb-4">
+                                <label for="photoUpload" class="form-label">Mukha / Larawan para sa Face Recognition *</label>
+                                <div class="card border-2 border-dashed p-4 text-center" id="photoDropZone">
+                                    <input type="file" class="form-control d-none" id="photoUpload" 
+                                           accept="image/*" required>
+                                    <div id="photoPreview" class="mb-3"></div>
+                                    <p class="text-muted mb-2">I-click para mag-upload o i-drag ang larawan</p>
+                                    <small class="text-muted">JPG, PNG, GIF (Max 5MB)</small>
+                                </div>
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="mb-3">
+                                <label for="remarks" class="form-label">Additional Remarks</label>
+                                <textarea class="form-control form-control-lg" id="remarks" rows="3" 
+                                          placeholder="Optional remarks..."></textarea>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success btn-lg flex-grow-1">
+                                    ✅ Mag-Register ng Employee
+                                </button>
+                                <button type="reset" class="btn btn-secondary btn-lg flex-grow-1">
+                                    🔄 Clear Form
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="registrationMessage" class="alert mt-3 d-none" role="alert"></div>
+                    </div>
+                </div>
+
+                <!-- Registered Employees -->
+                <div class="card border-0 shadow-sm mt-5">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Mga Nakarehistrong Empleyado</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="employeesTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Employee ID</th>
+                                        <th>Pangalan</th>
+                                        <th>Departamento</th>
+                                        <th>Posisyon</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="noEmployees" class="text-muted text-center">
+                                        <td colspan="6">Walang nakarehistring empleyado pa</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/employee.js"></script>
+</body>
+</html>

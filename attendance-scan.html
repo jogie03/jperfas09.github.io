@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Attendance Scan - Attendance Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/face-api.js/0.22.2/face-api.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">📋 Attendance Tracker</span>
+            <div class="text-white">
+                <span id="userEmail" class="me-3"></span>
+                <a href="dashboard.html" class="btn btn-outline-light btn-sm me-2">Back to Dashboard</a>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn">Mag-Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="fw-bold mb-4">🔍 Face Attendance Scan</h2>
+
+                <!-- Video Container -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <div id="videoContainer" class="position-relative" style="max-width: 100%; margin: auto;">
+                            <video id="video" autoplay muted playsinline 
+                                   style="width: 100%; border-radius: 10px; background: #000;"></video>
+                            <canvas id="canvas" style="position: absolute; top: 0; left: 0; display: none;"></canvas>
+                        </div>
+                        <div id="loadingStatus" class="alert alert-info mt-3 d-none">
+                            Loading Face Recognition models...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scan Result -->
+                <div id="resultContainer" class="card border-0 shadow-sm d-none mb-4">
+                    <div class="card-header" id="resultHeader">
+                        <h5 class="mb-0">Resulta ng Scan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img id="resultImage" src="" alt="Employee" 
+                                     style="width: 150px; height: 150px; border-radius: 10px; object-fit: cover;">
+                            </div>
+                            <div class="col-md-8">
+                                <table class="table">
+                                    <tr>
+                                        <th>Employee ID:</th>
+                                        <td id="resultEmployeeId"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pangalan:</th>
+                                        <td id="resultName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Departamento:</th>
+                                        <td id="resultDepartment"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Posisyon:</th>
+                                        <td id="resultPosition"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Petsa:</th>
+                                        <td id="resultDate"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Oras:</th>
+                                        <td id="resultTime"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td id="resultStatus"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Remarks:</th>
+                                        <td id="resultRemarks"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Messages -->
+                <div id="errorContainer" class="alert alert-danger d-none mb-4">
+                    <h5 class="alert-heading">⚠️ Error</h5>
+                    <p id="errorMessage"></p>
+                </div>
+
+                <!-- Controls -->
+                <div class="text-center">
+                    <button id="startScanBtn" class="btn btn-success btn-lg me-2">
+                        ▶️ Simulan ang Face Scan
+                    </button>
+                    <button id="stopScanBtn" class="btn btn-danger btn-lg me-2 d-none">
+                        ⏹️ Tigilan ang Scan
+                    </button>
+                    <button id="clearResultBtn" class="btn btn-secondary btn-lg d-none">
+                        🔄 Clear Result
+                    </button>
+                </div>
+
+                <!-- Recent Scans -->
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Mga Pinakabagong Scan</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover" id="recentScansTable">
+                            <thead>
+                                <tr>
+                                    <th>Oras</th>
+                                    <th>Employee ID</th>
+                                    <th>Pangalan</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="noScans" class="text-muted text-center">
+                                    <td colspan="5">Walang scans pa ngayong araw</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/face-recognition.js"></script>
+</body>
+</html>
